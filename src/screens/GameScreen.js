@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react'
+import React, { useContext, useState, useEffect, useReducer } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { TouchableOpacity, StyleSheet, View, Pressable } from 'react-native'
 import { Text } from 'react-native-elements'
@@ -9,26 +9,46 @@ const GameScreen = ({ navigation }) => {
   const { state, decreaseTime } = useContext(Context)
   const [ p, setPlayer ] = useState(0)
   const [ intervalId, setIntervalId] = useState(null)
+
+  const reducer = (finalTime, action) => {
+    switch (action) {
+      case 'reset':
+        return state.finalTime
+      case 'decrease':
+        return finalTime - 1
+      default:
+        return finalTime
+    }
+  } 
+
+  const [ finalTime, dispatch ] = useReducer(reducer, state.finalTime)
   const player = state.players[p]
   useEffect(() => {
     if (intervalId) {
       clearInterval(intervalId)
+      dispatch('reset')
     }
     setIntervalId(setInterval(() => {
-      decreaseTime(p)
+      if (player.time > 0)  {
+        decreaseTime(p)
+      } else {
+        console.log(finalTime)
+        dispatch('decrease')
+      }
     }, 1000))
-  }, [p])
+  }, [p, player.time > 0])
   return (
     <SafeAreaView style={styles.container}>
       {
-        player.time > 0
+        player.time > 0 || finalTime > 0
           ? <Pressable style={styles.touch}
             onPress={() => setPlayer((p + 1) % state.players.length)}
           >
             <View style={styles.body}>
               <Text h1 style={{ color: player.color }}>Player {p + 1}</Text>
-              <Text h1>{player.time}</Text>
-
+              <Text h1
+                style={{ color: player.time > 0 ? 'black' : 'gray' }}
+              >{player.time > 0 ? player.time : finalTime}</Text>
             </View>
           </Pressable>
           : <View style={styles.touch}>
