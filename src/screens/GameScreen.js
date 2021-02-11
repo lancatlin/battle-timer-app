@@ -15,7 +15,7 @@ const GameScreen = ({ navigation }) => {
         onPress={() => setPlayer((player+1) % state.players.length)}
       >
         <View style={styles.body}>
-          <Text h1>Player {player+1}</Text>
+          <Text h1 style={{ color: state.players[player].color }}>Player {player+1}</Text>
           <Text h1>00:30</Text>
         </View>
       </Pressable>
@@ -39,7 +39,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   touch: {
-    backgroundColor: 'pink',
     justifyContent: 'center',
     flex: 4,
   },
