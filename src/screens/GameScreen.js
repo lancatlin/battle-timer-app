@@ -1,25 +1,28 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { TouchableOpacity, StyleSheet, View } from 'react-native'
+import { TouchableOpacity, StyleSheet, View, Pressable } from 'react-native'
 import { Text } from 'react-native-elements'
 import { AntDesign, FontAwesome } from '@expo/vector-icons';
 import { Context } from '../context/GameContext'
 
-const GameScreen = () => {
+const GameScreen = ({ navigation }) => {
   const { state } = useContext(Context)
+  const [ player, setPlayer ] = useState(0)
   console.log(state)
   return (
     <SafeAreaView style={styles.container}>
-      <TouchableOpacity style={styles.touch}>
+      <Pressable style={styles.touch}
+        onPress={() => setPlayer((player+1) % state.players.length)}
+      >
         <View style={styles.body}>
-          <Text h1>Player 1</Text>
+          <Text h1>Player {player+1}</Text>
           <Text h1>00:30</Text>
         </View>
-      </TouchableOpacity>
+      </Pressable>
       <View style={styles.bottom}>
-        <AntDesign name="left" size={30} color="black" />
-        <FontAwesome name="stop" size={30} color="black" />
-        <AntDesign name="right" size={30} color="black" />
+        <TouchableOpacity onPress={() => navigation.navigate("Home")}>
+          <AntDesign name="back" size={40} color="black" />
+        </TouchableOpacity>
       </View>
     </SafeAreaView>
   )
@@ -36,6 +39,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   touch: {
+    backgroundColor: 'pink',
     justifyContent: 'center',
     flex: 4,
   },
