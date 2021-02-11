@@ -1,4 +1,5 @@
 import createDataContext from './createDataContext'
+import randomColor from '../helper/randomColor'
 
 const colors = ['#3e517a', '#fe5f55', '#00a7e1', '#e9724c']
 
@@ -9,7 +10,7 @@ const reducer = (state, action) => {
       const arr = []
       for (let i = 0; i < players; i++) {
         arr.push({
-          color: colors[i],
+          color: randomColor(),
           time: totalTime,
         })
       }
