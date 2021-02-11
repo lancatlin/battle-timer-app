@@ -16,7 +16,7 @@ const HomeScreen = ({ navigation }) => {
   }
 
   return <SafeAreaView style={styles.container}>
-    <Text h1>Home</Text>
+    <Text h1>Game Clock</Text>
     <Input
       label="Players" 
       value={players}
