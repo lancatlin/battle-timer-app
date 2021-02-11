@@ -1,26 +1,38 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { TouchableOpacity, StyleSheet, View, Pressable } from 'react-native'
 import { Text } from 'react-native-elements'
-import { AntDesign, FontAwesome } from '@expo/vector-icons';
+import { AntDesign } from '@expo/vector-icons';
 import { Context } from '../context/GameContext'
 
 const GameScreen = ({ navigation }) => {
-  const { state } = useContext(Context)
-  const [ player, setPlayer ] = useState(0)
-  console.log(state)
+  const { state, decreaseTime } = useContext(Context)
+  const [ p, setPlayer ] = useState(0)
+  const [ intervalId, setIntervalId] = useState(null)
+  const player = state.players[p]
+  useEffect(() => {
+    if (intervalId) {
+      clearInterval(intervalId)
+    }
+    setIntervalId(setInterval(() => {
+      decreaseTime(p)
+    }, 1000))
+  }, [p])
   return (
     <SafeAreaView style={styles.container}>
       <Pressable style={styles.touch}
-        onPress={() => setPlayer((player+1) % state.players.length)}
+        onPress={() => setPlayer((p+1) % state.players.length)}
       >
         <View style={styles.body}>
-          <Text h1 style={{ color: state.players[player].color }}>Player {player+1}</Text>
-          <Text h1>00:30</Text>
+          <Text h1 style={{ color: player.color }}>Player {p+1}</Text>
+          <Text h1>{ player.time }</Text>
         </View>
       </Pressable>
       <View style={styles.bottom}>
-        <TouchableOpacity onPress={() => navigation.navigate("Home")}>
+        <TouchableOpacity onPress={() => {
+          clearInterval(intervalId)
+          navigation.navigate("Home")
+        }}>
           <AntDesign name="back" size={40} color="black" />
         </TouchableOpacity>
       </View>

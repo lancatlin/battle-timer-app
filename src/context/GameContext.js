@@ -18,6 +18,14 @@ const reducer = (state, action) => {
         players: arr,
         finalTime,
       }
+
+    case 'decrease':
+      return {
+        ...state,
+        players: state.players.map(
+          (player, i) => i == action.payload ? { ...player, time: player.time - 1} : player
+        )
+      }
     default:
       return state
   }
@@ -27,10 +35,15 @@ const createGame = dispatch => (players, totalTime, finalTime) => {
   dispatch({ type: 'create', payload: { players, totalTime, finalTime } })
 }
 
+const decreaseTime = dispatch => playerId => {
+  dispatch({ type: 'decrease', payload: playerId })
+}
+
 export const { Context, Provider } = createDataContext(
   reducer,
   {
     createGame,
+    decreaseTime,
   },
   {
     players: [],
