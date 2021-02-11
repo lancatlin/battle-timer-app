@@ -1,10 +1,12 @@
 import React from 'react'
 import { View, Text, StyleSheet } from 'react-native'
+import { Button, ThemeProvider } from 'react-native-elements'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 const HomeScreen = () => {
-  return <View>
+  return <SafeAreaView>
     <Text>Home</Text>
-  </View>
+  </SafeAreaView>
 }
 
 const styles = StyleSheet.create({})
