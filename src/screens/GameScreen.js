@@ -20,14 +20,22 @@ const GameScreen = ({ navigation }) => {
   }, [p])
   return (
     <SafeAreaView style={styles.container}>
-      <Pressable style={styles.touch}
-        onPress={() => setPlayer((p+1) % state.players.length)}
-      >
-        <View style={styles.body}>
-          <Text h1 style={{ color: player.color }}>Player {p+1}</Text>
-          <Text h1>{ player.time }</Text>
-        </View>
-      </Pressable>
+      {
+        player.time > 0
+          ? <Pressable style={styles.touch}
+            onPress={() => setPlayer((p + 1) % state.players.length)}
+          >
+            <View style={styles.body}>
+              <Text h1 style={{ color: player.color }}>Player {p + 1}</Text>
+              <Text h1>{player.time}</Text>
+
+            </View>
+          </Pressable>
+          : <View style={styles.touch}>
+            <Text h1 style={{ color: player.color }}>Player {p + 1}</Text>
+            <Text h1 style={styles.loseText}>You Lose</Text>
+          </View>
+      }
       <View style={styles.bottom}>
         <TouchableOpacity onPress={() => {
           clearInterval(intervalId)
@@ -51,6 +59,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   touch: {
+    alignItems: 'center',
     justifyContent: 'center',
     flex: 4,
   },
@@ -58,6 +67,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     flex: 1,
+  },
+  loseText: {
+    color: 'red',
   },
 })
 
