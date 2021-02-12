@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "game-timer",
-    "slug": "game-timer",
+    "name": "battle-timer",
+    "slug": "battle-timer",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -24,7 +24,7 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       },
-      "package": "cc.wancat.gametimer"
+      "package": "cc.wancat.battletimer"
     },
     "web": {
       "favicon": "./assets/favicon.png"
