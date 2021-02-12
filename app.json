@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "game-clock",
-    "slug": "game-clock",
+    "name": "game-timer",
+    "slug": "game-timer",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -24,7 +24,7 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       },
-      "package": "cc.wancat.gameclock"
+      "package": "cc.wancat.gametimer"
     },
     "web": {
       "favicon": "./assets/favicon.png"
