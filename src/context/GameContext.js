@@ -8,6 +8,7 @@ const reducer = (state, action) => {
       const arr = []
       for (let i = 0; i < players; i++) {
         arr.push({
+          name: `Player ${i+1}`,
           color: randomColor(),
           time: totalTime,
         })
