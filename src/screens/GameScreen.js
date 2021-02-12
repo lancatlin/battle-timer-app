@@ -8,16 +8,20 @@ import useTimer from '../helper/useTimer'
 const GameScreen = ({ navigation }) => {
   const [player, finalTime, next, stop] = useTimer()
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={{ ...styles.container, backgroundColor: player.color }}>
       {
         player.time > 0 || finalTime > 0
           ? <Pressable style={styles.touch}
             onPress={next}
           >
             <View style={styles.body}>
-              <Text h1 style={{ color: player.color }}>{ player.name }</Text>
-              <Text h1
-                style={{ color: player.time > 0 ? 'black' : 'gray' }}
+              <Text h1 style={{ color: "white" }}>{ player.name }</Text>
+              <Text 
+                style={{
+                  color: player.time > 0 ? 'white' : 'black',
+                  fontSize: 64,
+                  fontWeight: 'bold',
+                }}
               >{player.time > 0 ? player.time : finalTime}</Text>
             </View>
           </Pressable>
@@ -31,7 +35,7 @@ const GameScreen = ({ navigation }) => {
           stop()
           navigation.navigate("Home")
         }}>
-          <AntDesign name="back" size={40} color="black" />
+          <AntDesign name="back" size={40} color="white" />
         </TouchableOpacity>
       </View>
     </SafeAreaView>

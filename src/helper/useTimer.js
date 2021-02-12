@@ -32,7 +32,6 @@ export default () => {
       if (player.time > 0)  {
         decreaseTime(p)
       } else {
-        console.log(finalTime)
         dispatch('decrease')
       }
     }, 1000))
