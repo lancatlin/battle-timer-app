@@ -3,36 +3,26 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import { TouchableOpacity, StyleSheet, View, Pressable } from 'react-native'
 import { Text } from 'react-native-elements'
 import { AntDesign } from '@expo/vector-icons';
-import useTimer from '../helper/useTimer'
 
 const GameScreen = ({ navigation }) => {
-  const [player, finalTime, next, stop] = useTimer()
   return (
-    <SafeAreaView style={{ ...styles.container, backgroundColor: player.color }}>
-      {
-        player.time > 0 || finalTime > 0
-          ? <Pressable style={styles.touch}
-            onPress={next}
-          >
-            <View style={styles.body}>
-              <Text h1 style={{ color: "white" }}>{ player.name }</Text>
-              <Text 
-                style={{
-                  color: player.time > 0 ? 'white' : 'black',
-                  fontSize: 64,
-                  fontWeight: 'bold',
-                }}
-              >{player.time > 0 ? player.time : finalTime}</Text>
-            </View>
-          </Pressable>
-          : <View style={styles.touch}>
-            <Text h1 style={{ color: player.color }}>{ player.name }</Text>
-            <Text h1 style={styles.loseText}>You Lose</Text>
-          </View>
-      }
+    <SafeAreaView style={{ ...styles.container, backgroundColor: "pink" }}>
+      <Pressable style={styles.touch}
+      >
+        <View style={styles.body}>
+          <Text h1 style={{ color: "white" }}>Player Name</Text>
+          <Text
+            style={{
+              color: 'white',
+              fontSize: 64,
+              fontWeight: 'bold',
+            }}
+          >03:10</Text>
+        </View>
+      </Pressable>
+
       <View style={styles.bottom}>
         <TouchableOpacity onPress={() => {
-          stop()
           navigation.navigate("Home")
         }}>
           <AntDesign name="back" size={40} color="white" />

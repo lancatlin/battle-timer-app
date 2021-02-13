@@ -19,12 +19,6 @@ const reducer = (state, action) => {
       }
 
     case 'decrease':
-      return {
-        ...state,
-        players: state.players.map(
-          (player, i) => i == action.payload ? { ...player, time: player.time - 1} : player
-        )
-      }
     default:
       return state
   }
