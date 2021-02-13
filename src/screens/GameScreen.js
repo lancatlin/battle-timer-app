@@ -55,11 +55,11 @@ const GameScreen = ({ navigation }) => {
             ? <Text style={{ ...styles.time }} >{player.time}</Text>
             : <Text style={{ ...styles.finalTime }} >{state.timer}</Text>
           }
-          { state.pausing 
-            ? <AntDesign name="pause" size={64} color="white" />
-            : null
-          }
         </View>
+        {state.pausing
+          ? <AntDesign name="pause" size={100} color="white" style={styles.pause} />
+          : null
+        }
       </Pressable>
 
       <BottomButton />
@@ -100,6 +100,10 @@ const styles = StyleSheet.create({
     color: 'black',
     fontSize: 64,
     fontWeight: 'bold',
+  },
+  pause: {
+    position: 'absolute',
+    bottom: 20,
   }
 })
 
