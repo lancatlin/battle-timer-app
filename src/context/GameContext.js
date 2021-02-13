@@ -15,6 +15,7 @@ const reducer = (state, action) => {
       }
       return {
         ...state,
+        current: 0,
         players: arr,
         finalTime,
       }

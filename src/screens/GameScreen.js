@@ -24,13 +24,7 @@ const GameScreen = ({ navigation }) => {
       >
         <View style={styles.body}>
           <Text h1 style={{ color: "white" }}>{ player.name }</Text>
-          <Text
-            style={{
-              color: 'white',
-              fontSize: 64,
-              fontWeight: 'bold',
-            }}
-          >{ player.time }</Text>
+          <Text style={styles.time} >{ player.time }</Text>
         </View>
       </Pressable>
 
@@ -69,6 +63,11 @@ const styles = StyleSheet.create({
   loseText: {
     color: 'red',
   },
+  time: {
+    color: 'white',
+    fontSize: 64,
+    fontWeight: 'bold',
+  }
 })
 
 export default GameScreen
