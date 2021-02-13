@@ -11,6 +11,7 @@ const reducer = (state, action) => {
           name: `Player ${i+1}`,
           color: randomColor(),
           time: totalTime,
+          lose: false,
         })
       }
       return {
@@ -36,6 +37,17 @@ const reducer = (state, action) => {
         current: (state.current + 1) % state.players.length,
       }
 
+    case 'check':
+      return {
+        ...state,
+        players: state.players.map(
+          (player) => ({
+            ...player,
+            lose: player.time <= 0,
+          })
+        )
+      }
+
     default:
       return state
   }
@@ -47,6 +59,7 @@ const createGame = dispatch => (players, totalTime, finalTime) => {
 
 const decreaseTime = dispatch => () => {
   dispatch({ type: 'decrease' })
+  dispatch({ type: 'check' })
 }
 
 const next = dispatch => () => {

@@ -20,11 +20,14 @@ const GameScreen = ({ navigation }) => {
   return (
     <SafeAreaView style={{ ...styles.container, backgroundColor: player.color }}>
       <Pressable style={styles.touch}
-        onPress={next}
+        onPress={player.lose ? null : next}
       >
         <View style={styles.body}>
           <Text h1 style={{ color: "white" }}>{ player.name }</Text>
-          <Text style={styles.time} >{ player.time }</Text>
+          { !player.lose
+            ? <Text style={styles.time} >{ player.time }</Text>
+            : <Text style={styles.loseText}>You Lose</Text>
+          }
         </View>
       </Pressable>
 
@@ -62,6 +65,7 @@ const styles = StyleSheet.create({
   },
   loseText: {
     color: 'red',
+    fontSize: 48,
   },
   time: {
     color: 'white',
