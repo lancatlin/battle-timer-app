@@ -19,31 +19,40 @@ const reducer = (state, action) => {
         current: 0,
         players: arr,
         finalTime,
+        timer: finalTime,
       }
 
     case 'decrease':
-      return {
-        ...state,
-        players: state.players.map(
-          (player, i) => i == state.current
-            ? { ...player, time: player.time - 1}
-            : player
-        ),
+      if (state.players[state.current].time > 0) {
+        return {
+          ...state,
+          players: state.players.map(
+            (player, i) => i == state.current
+              ? { ...player, time: player.time - 1 }
+              : player
+          ),
+        }
+      } else {
+        return {
+          ...state,
+          timer: state.timer - 1,
+        }
       }
 
     case 'next':
       return {
         ...state,
         current: (state.current + 1) % state.players.length,
+        timer: state.finalTime,
       }
 
     case 'check':
       return {
         ...state,
         players: state.players.map(
-          (player) => ({
+          (player, i) => ({
             ...player,
-            lose: player.time <= 0,
+            lose: player.time <= 0 && i == state.current && state.timer <= 0,
           })
         )
       }
@@ -63,7 +72,7 @@ const decreaseTime = dispatch => () => {
 }
 
 const next = dispatch => () => {
-  dispatch({ type: 'next'})
+  dispatch({ type: 'next' })
 }
 
 export const { Context, Provider } = createDataContext(
@@ -77,5 +86,6 @@ export const { Context, Provider } = createDataContext(
     players: [],
     finalTime: 0,
     current: 0,
+    timer: 0,
   },
 )

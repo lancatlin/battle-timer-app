@@ -25,7 +25,9 @@ const GameScreen = ({ navigation }) => {
         <View style={styles.body}>
           <Text h1 style={{ color: "white" }}>{ player.name }</Text>
           { !player.lose
-            ? <Text style={styles.time} >{ player.time }</Text>
+            ? player.time > 0
+              ? <Text style={{...styles.time}} >{ player.time }</Text>
+              : <Text style={{...styles.finalTime}} >{ state.timer }</Text>
             : <Text style={styles.loseText}>You Lose</Text>
           }
         </View>
@@ -69,6 +71,11 @@ const styles = StyleSheet.create({
   },
   time: {
     color: 'white',
+    fontSize: 64,
+    fontWeight: 'bold',
+  },
+  finalTime: {
+    color: 'black',
     fontSize: 64,
     fontWeight: 'bold',
   }
