@@ -6,41 +6,63 @@ import { AntDesign } from '@expo/vector-icons';
 import { Context } from '../context/GameContext'
 
 const GameScreen = ({ navigation }) => {
-  const { state, decreaseTime, next } = useContext(Context)
+  const { state, decreaseTime, next, pause } = useContext(Context)
   const [ intervalId, setIntervalId] = useState(null)
   useEffect(() => {
     if (intervalId) {
       clearInterval(intervalId)
     }
-    setIntervalId(setInterval(() => {
-      decreaseTime()
-    }, 1000))
-  }, [state.current])
+    if (!state.pausing) {
+      setIntervalId(setInterval(() => {
+        decreaseTime()
+      }, 1000))
+    } else {
+      setIntervalId(null)
+    }
+  }, [state.current, state.pausing])
+
   const player = state.players[state.current]
+  const BottomButton = () => (
+    <View style={styles.bottom}>
+      <TouchableOpacity onPress={() => {
+        clearInterval(intervalId)
+        navigation.navigate("Home")
+      }}>
+        <AntDesign name="back" size={40} color="white" />
+      </TouchableOpacity>
+    </View>
+  )
+  if (player.lose) {
+    return (
+      <SafeAreaView style={{ ...styles.container, backgroundColor: player.color }}>
+        <View style={styles.touch}>
+          <Text h1 style={{ color: "white" }}>{player.name}</Text>
+          <Text style={styles.loseText}>You Lose</Text>
+        </View>
+        <BottomButton />
+      </SafeAreaView>
+    )
+  }
   return (
     <SafeAreaView style={{ ...styles.container, backgroundColor: player.color }}>
       <Pressable style={styles.touch}
-        onPress={player.lose ? null : next}
+        onPress={state.pausing ? pause: next }
+        onLongPress={pause}
       >
         <View style={styles.body}>
-          <Text h1 style={{ color: "white" }}>{ player.name }</Text>
-          { !player.lose
-            ? player.time > 0
-              ? <Text style={{...styles.time}} >{ player.time }</Text>
-              : <Text style={{...styles.finalTime}} >{ state.timer }</Text>
-            : <Text style={styles.loseText}>You Lose</Text>
+          <Text h1 style={{ color: "white" }}>{player.name}</Text>
+          {player.time > 0
+            ? <Text style={{ ...styles.time }} >{player.time}</Text>
+            : <Text style={{ ...styles.finalTime }} >{state.timer}</Text>
+          }
+          { state.pausing 
+            ? <AntDesign name="pause" size={64} color="white" />
+            : null
           }
         </View>
       </Pressable>
 
-      <View style={styles.bottom}>
-        <TouchableOpacity onPress={() => {
-          clearInterval(intervalId)
-          navigation.navigate("Home")
-        }}>
-          <AntDesign name="back" size={40} color="white" />
-        </TouchableOpacity>
-      </View>
+      <BottomButton />
     </SafeAreaView>
   )
 }

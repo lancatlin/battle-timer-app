@@ -20,6 +20,7 @@ const reducer = (state, action) => {
         players: arr,
         finalTime,
         timer: finalTime,
+        pausing: false,
       }
 
     case 'decrease':
@@ -56,6 +57,12 @@ const reducer = (state, action) => {
           })
         )
       }
+    
+    case 'pause':
+      return {
+        ...state,
+        pausing: !state.pausing,
+      }
 
     default:
       return state
@@ -75,17 +82,21 @@ const next = dispatch => () => {
   dispatch({ type: 'next' })
 }
 
+const pause = dispatch => () => dispatch({ type: 'pause' })
+
 export const { Context, Provider } = createDataContext(
   reducer,
   {
     createGame,
     decreaseTime,
     next,
+    pause,
   },
   {
     players: [],
     finalTime: 0,
     current: 0,
     timer: 0,
+    pausing: false,
   },
 )
